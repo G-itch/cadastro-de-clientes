@@ -2,8 +2,10 @@ import 'package:cadastro/helpers/validators.dart';
 import 'package:cadastro/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 import '../models/user_manager.dart';
 
@@ -19,7 +21,9 @@ class SignUpPage extends StatelessWidget {
       backgroundColor: Color.fromARGB(255, 16, 16, 16),
       body: Container(
           child: Align(
-        alignment: Alignment(-.6, 0),
+        alignment: ResponsiveWrapper.of(context).isSmallerThan(DESKTOP)
+            ? Alignment.center
+            : Alignment(-.6, 0),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 30),
           child: ConstrainedBox(
@@ -85,7 +89,10 @@ class SignUpPage extends StatelessWidget {
                                   return null;
                                 },
                                 onSaved: (name) => user.name = name!,
-                              ),
+                              ).animate().fadeIn(
+                                  duration: const Duration(seconds: 2),
+                                  delay: const Duration(
+                                      seconds: 1, milliseconds: 400)),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 8.0),
@@ -123,7 +130,10 @@ class SignUpPage extends StatelessWidget {
                                   return null;
                                 },
                                 onSaved: (email) => user.email = email!,
-                              ),
+                              ).animate().fadeIn(
+                                  duration: const Duration(seconds: 2),
+                                  delay: const Duration(
+                                      seconds: 1, milliseconds: 400)),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 8.0),
@@ -163,48 +173,53 @@ class SignUpPage extends StatelessWidget {
                                 },
                                 onSaved: (password) =>
                                     user.password = password!,
-                              ),
+                              ).animate().fadeIn(
+                                  duration: const Duration(seconds: 2),
+                                  delay: const Duration(
+                                      seconds: 1, milliseconds: 800)),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: TextFormField(
-                                enabled: !userManager.loading,
-                                style: GoogleFonts.poppins(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white),
-                                cursorHeight: 20,
-                                cursorColor: Colors.white,
-                                autocorrect: false,
-                                obscureText: true,
-                                decoration: InputDecoration(
-                                  isDense: true,
-                                  filled: true,
-                                  fillColor: Color.fromARGB(255, 23, 23, 23),
-                                  hintText: 'Repita a senha',
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  disabledBorder: bordertext,
-                                  enabledBorder: bordertext,
-                                  focusedBorder: bordertext,
-                                  hintStyle: GoogleFonts.poppins(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: TextFormField(
+                                  enabled: !userManager.loading,
+                                  style: GoogleFonts.poppins(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                       color: Colors.white),
-                                ),
-                                validator: (pass) {
-                                  if (pass!.isEmpty) {
-                                    return 'Campo obrigatório';
-                                  } else if (pass.length < 6) {
-                                    return 'Senha muito curta';
-                                  }
-                                  return null;
-                                },
-                                onSaved: (password) =>
-                                    user.confirmPassword = password = password!,
-                              ),
-                            ),
+                                  cursorHeight: 20,
+                                  cursorColor: Colors.white,
+                                  autocorrect: false,
+                                  obscureText: true,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    filled: true,
+                                    fillColor: Color.fromARGB(255, 23, 23, 23),
+                                    hintText: 'Confirme a senha',
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    disabledBorder: bordertext,
+                                    enabledBorder: bordertext,
+                                    focusedBorder: bordertext,
+                                    hintStyle: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white),
+                                  ),
+                                  validator: (pass) {
+                                    if (pass!.isEmpty) {
+                                      return 'Campo obrigatório';
+                                    } else if (pass.length < 6) {
+                                      return 'Senha muito curta';
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (password) => user.confirmPassword =
+                                      password = password!,
+                                ).animate().fadeIn(
+                                    duration: const Duration(seconds: 2),
+                                    delay: const Duration(
+                                        seconds: 1, milliseconds: 800))),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -232,7 +247,9 @@ class SignUpPage extends StatelessWidget {
                                                 Colors.transparent),
                                         overlayColor: MaterialStateProperty.all(
                                             Color.fromARGB(43, 255, 255, 255))),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      context.go("/");
+                                    },
                                     child: Text("Entre",
                                         style: GoogleFonts.poppins(
                                             fontSize: 13,
@@ -286,7 +303,7 @@ class SignUpPage extends StatelessWidget {
                                               ));
                                             },
                                             onSucess: () {
-                                              Navigator.of(context).pop();
+                                              // Navigator.of(context).pop();
                                             });
                                       }
                                     },
@@ -318,7 +335,10 @@ class SignUpPage extends StatelessWidget {
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600),
                                     ),
-                            )
+                            ).animate().fadeIn(
+                                duration: const Duration(seconds: 2),
+                                delay: const Duration(
+                                    seconds: 2, milliseconds: 200))
                           ]);
                         }),
                       ),

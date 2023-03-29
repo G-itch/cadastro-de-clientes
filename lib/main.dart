@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UserManager(), lazy: false),
       ],
       child: MaterialApp.router(
+        scrollBehavior: ScrollBehavior().copyWith(scrollbars: false),
         color: Color.fromARGB(255, 16, 16, 16),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

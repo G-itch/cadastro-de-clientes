@@ -1,6 +1,7 @@
 import 'package:cadastro/models/user.dart';
 import 'package:cadastro/models/user_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -195,8 +196,7 @@ class LoginPage extends StatelessWidget {
                                       overlayColor: MaterialStateProperty.all(
                                           Color.fromARGB(43, 255, 255, 255))),
                                   onPressed: () {
-                                    Navigator.of(context)
-                                        .pushReplacementNamed("/signup");
+                                    context.go("/signup");
                                   },
                                   child: Text("Cadastre-se",
                                       style: GoogleFonts.poppins(
@@ -240,7 +240,7 @@ class LoginPage extends StatelessWidget {
                                             );
                                           },
                                           onSucess: () {
-                                            Navigator.of(context).pop();
+                                            context.go("/clientpage");
                                             print('sucesso');
                                           });
                                     }
