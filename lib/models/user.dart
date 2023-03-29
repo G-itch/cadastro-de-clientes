@@ -15,6 +15,7 @@ class Usuario {
   String? email;
   String? password;
   String? confirmPassword;
+
   bool admin = false;
   DocumentReference get firebasefirestoreRef =>
       FirebaseFirestore.instance.doc('users/$id');
@@ -23,6 +24,9 @@ class Usuario {
   }
 
   Map<String, dynamic> toMap() {
-    return {'name': name, 'email': email};
+    return {
+      'name': name,
+      'email': email,
+    };
   }
 }

@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import 'firebase_options.dart';
+import 'models/client_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +26,11 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserManager(), lazy: false),
+        ChangeNotifierProxyProvider<UserManager, ClientManager>(
+            create: (_) => ClientManager(),
+            lazy: true,
+            update: (_, userManager, clientManager) =>
+                clientManager!..updateUser(userManager)),
       ],
       child: MaterialApp.router(
         scrollBehavior: ScrollBehavior().copyWith(scrollbars: false),
@@ -46,7 +52,7 @@ class MyApp extends StatelessWidget {
               ResponsiveBreakpoint.resize(1000, name: DESKTOP),
               ResponsiveBreakpoint.autoScale(1700, name: 'XL'),
             ],
-            backgroundColor: Color.fromARGB(255, 16, 16, 16)),
+            background: Container(color: Color.fromARGB(255, 16, 16, 16))),
         // onGenerateRoute: (settings) {
 
         //   switch (settings.name) {

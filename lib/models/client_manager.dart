@@ -1,21 +1,37 @@
-class ProductManager extends ChangeNotifier {
-  ProductManager() {
-    _loadAllProducts();
+import 'package:cadastro/models/client.dart';
+import 'package:cadastro/models/user.dart';
+import 'package:cadastro/models/user_manager.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+
+class ClientManager extends ChangeNotifier {
+  ClientManager() {
+    _loadAllClients();
+  }
+  Usuario? user;
+  void updateUser(UserManager userManager) {
+    user = userManager.user;
+    print(user?.name);
+    allClients.clear();
+    print("user: ${user}");
+    if (user != null) {
+      _loadAllClients();
+    }
   }
 
-  late List<Product> allProducts = [];
+  late List<Client> allClients = [];
 
   late String _search = '';
 
-  List<Product> get filteredProducts {
-    final List<Product> filteredProducts = [];
+  List<Client> get filteredClients {
+    final List<Client> filteredClients = [];
     if (search.isEmpty) {
-      filteredProducts.addAll(allProducts);
+      filteredClients.addAll(allClients);
     } else {
-      filteredProducts.addAll(allProducts
+      filteredClients.addAll(allClients
           .where((p) => p.name!.toLowerCase().contains(search.toLowerCase())));
     }
-    return filteredProducts;
+    return filteredClients;
   }
 
   String get search => _search;
@@ -24,34 +40,34 @@ class ProductManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _loadAllProducts() async {
-    final QuerySnapshot snapProducts = await FirebaseFirestore.instance
-        .collection('products')
+  Future<void> _loadAllClients() async {
+    final QuerySnapshot snapClients = await FirebaseFirestore.instance
+        .collection('Clients')
         .where('deleted', isEqualTo: false)
         .get();
 
-    allProducts = snapProducts.docs.map((d) => Product.fromdoc(d)).toList();
+    allClients = snapClients.docs.map((d) => Client.fromdoc(d)).toList();
 
     notifyListeners();
   }
 
-  Product? findProductById(String id) {
+  Client? findClientById(String id) {
     try {
-      return allProducts.firstWhere((p) => p.id == id);
+      return allClients.firstWhere((p) => p.id == id);
     } catch (e) {
       return null;
     }
   }
 
-  void update(Product product) {
-    allProducts.removeWhere((p) => p.id == product.id);
-    allProducts.add(product);
+  void update(Client client) {
+    allClients.removeWhere((p) => p.id == client.id);
+    allClients.add(client);
     notifyListeners();
   }
 
-  void delete(Product product) {
-    product.delete();
-    allProducts.where((p) => p.id == product.id);
+  void delete(Client client) {
+    client.delete();
+    allClients.where((p) => p.id == client.id);
     notifyListeners();
   }
 }

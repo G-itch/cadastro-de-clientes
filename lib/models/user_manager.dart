@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:cadastro/helpers/firebase_errors.dart';
 import 'package:cadastro/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
 
 class UserManager extends ChangeNotifier {
   UserManager() {
@@ -62,6 +65,15 @@ class UserManager extends ChangeNotifier {
       onFail(getErrorString(e.code));
     }
     loading = false;
+  }
+
+  cepapi(String cep) async {
+    String path = 'https://viacep.com.br/ws/${cep}/json/';
+    Uri url = Uri.parse(path);
+    http.Response response;
+
+    response = await http.get(url);
+    Map<String, dynamic> inf = jsonDecode(response.body);
   }
 
   Future<void> loadCurrentUser({User? firebaseUser}) async {

@@ -82,7 +82,7 @@ class ClientsPage extends StatelessWidget {
                               Column(
                                 children: [
                                   Container(
-                                    width: 200,
+                                    width: 180,
                                     height: 4,
                                     color: Colors.white,
                                   ),
@@ -102,7 +102,7 @@ class ClientsPage extends StatelessWidget {
                               Column(
                                 children: [
                                   Container(
-                                    width: 200,
+                                    width: 180,
                                     height: 4,
                                     color: Colors.white,
                                   ),
