@@ -248,7 +248,7 @@ class SignUpPage extends StatelessWidget {
                                         overlayColor: MaterialStateProperty.all(
                                             Color.fromARGB(43, 255, 255, 255))),
                                     onPressed: () {
-                                      context.go("/");
+                                      context.go("/login");
                                     },
                                     child: Text("Entre",
                                         style: GoogleFonts.poppins(
@@ -303,6 +303,7 @@ class SignUpPage extends StatelessWidget {
                                               ));
                                             },
                                             onSucess: () {
+                                              context.go("clientpage");
                                               // Navigator.of(context).pop();
                                             });
                                       }

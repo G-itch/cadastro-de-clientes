@@ -43,7 +43,7 @@ class ClientTile extends StatelessWidget {
                 ),
               ),
               Container(
-                width: 150,
+                width: 120,
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Align(

@@ -45,18 +45,20 @@ class ClientManager extends ChangeNotifier {
   }
 
   Future<void> _loadAllClients() async {
-    final QuerySnapshot snapClients = await FirebaseFirestore.instance
-        .collection("users")
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection('clients')
-        .get();
+    if (FirebaseAuth.instance.currentUser != null) {
+      final QuerySnapshot snapClients = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('clients')
+          .get();
 
-    allClients = snapClients.docs.map((d) => Client.fromdoc(d)).toList();
-    allClients.sort((a, b) => a.name
-        .toString()
-        .toLowerCase()
-        .compareTo(b.name.toString().toLowerCase()));
-    notifyListeners();
+      allClients = snapClients.docs.map((d) => Client.fromdoc(d)).toList();
+      allClients.sort((a, b) => a.name
+          .toString()
+          .toLowerCase()
+          .compareTo(b.name.toString().toLowerCase()));
+      notifyListeners();
+    }
   }
 
   Client? findClientById(String id) {

@@ -42,37 +42,37 @@ class _EditCLientState extends State<EditCLient> {
       } else {
         client = clientManager.allClients[widget.index];
       }
-      if (namecontroller.text.isEmpty || widget.index.isNegative) {
+      if (namecontroller.text.isEmpty && widget.index.isNegative) {
         namecontroller.text = client.name ?? "";
       }
-      if (emailcontroller.text.isEmpty || widget.index.isNegative) {
+      if (emailcontroller.text.isEmpty && widget.index.isNegative) {
         emailcontroller.text = client.email ?? "";
       }
-      if (numbercontroller.text.isEmpty || widget.index.isNegative) {
+      if (numbercontroller.text.isEmpty && widget.index.isNegative) {
         numbercontroller.text = client.number ?? "";
       }
-      if (rgcontroller.text.isEmpty || widget.index.isNegative) {
+      if (rgcontroller.text.isEmpty && widget.index.isNegative) {
         rgcontroller.text = client.rg ?? "";
       }
-      if (cpfcontroller.text.isEmpty || widget.index.isNegative) {
+      if (cpfcontroller.text.isEmpty && widget.index.isNegative) {
         cpfcontroller.text = client.cpf ?? "";
       }
-      if (cepcontroller.text.isEmpty || widget.index.isNegative) {
+      if (cepcontroller.text.isEmpty && widget.index.isNegative) {
         cepcontroller.text = client.cep ?? "";
       }
-      if (streetcontroller.text.isEmpty || widget.index.isNegative) {
+      if (streetcontroller.text.isEmpty && widget.index.isNegative) {
         streetcontroller.text = client.street ?? "";
       }
-      if (neighcontroller.text.isEmpty || widget.index.isNegative) {
+      if (neighcontroller.text.isEmpty && widget.index.isNegative) {
         neighcontroller.text = client.neigh ?? "";
       }
-      if (citycontroller.text.isEmpty || widget.index.isNegative) {
+      if (citycontroller.text.isEmpty && widget.index.isNegative) {
         citycontroller.text = client.city ?? "";
       }
-      if (ibgecontroller.text.isEmpty || widget.index.isNegative) {
+      if (ibgecontroller.text.isEmpty && widget.index.isNegative) {
         ibgecontroller.text = client.ibge ?? "";
       }
-      if (statecontroller.text.isEmpty || widget.index.isNegative) {
+      if (statecontroller.text.isEmpty && widget.index.isNegative) {
         statecontroller.text = client.state ?? "";
       }
       return ChangeNotifierProvider.value(
