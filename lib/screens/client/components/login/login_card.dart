@@ -45,7 +45,7 @@ class LoginCard extends StatelessWidget {
                       context.go("/login");
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 16, 16, 16),
+                        backgroundColor: Color.fromARGB(255, 16, 16, 17),
                         textStyle: const TextStyle(color: Colors.white)),
                     // color: Theme.of(context).primaryColor,
                     // textColor: Colors.white,
