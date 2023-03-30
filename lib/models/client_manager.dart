@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:cadastro/models/client.dart';
 import 'package:cadastro/models/user.dart';
 import 'package:cadastro/models/user_manager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class ClientManager extends ChangeNotifier {
   ClientManager() {
@@ -42,12 +46,14 @@ class ClientManager extends ChangeNotifier {
 
   Future<void> _loadAllClients() async {
     final QuerySnapshot snapClients = await FirebaseFirestore.instance
-        .collection('Clients')
-        .where('deleted', isEqualTo: false)
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('clients')
         .get();
 
     allClients = snapClients.docs.map((d) => Client.fromdoc(d)).toList();
-
+    allClients
+        .sort((a, b) => a.toString().toLowerCase().compareTo(b.toString()));
     notifyListeners();
   }
 

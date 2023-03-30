@@ -1,4 +1,4 @@
-import 'package:cadastro/screens/clientpage.dart';
+import 'package:cadastro/screens/client/clientpage.dart';
 import 'package:cadastro/screens/login.dart';
 import 'package:cadastro/screens/signup.dart';
 import 'package:go_router/go_router.dart';

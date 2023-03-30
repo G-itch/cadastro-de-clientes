@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class Client extends ChangeNotifier {
   Client(
@@ -14,10 +18,11 @@ class Client extends ChangeNotifier {
       this.neigh,
       this.city,
       this.ibge,
-      this.state}) {}
+      this.state});
   Client.fromdoc(DocumentSnapshot document) {
     id = document.id;
     name = document.get("name") as String;
+    email = document.get("email") as String;
     cpf = document.get('cpf') as String;
     rg = document.get('rg') as String;
     number = document.get('number') as String;
@@ -31,11 +36,15 @@ class Client extends ChangeNotifier {
         ? document.get('deleted')
         : false;
   }
-  DocumentReference get firebasefirestoreref =>
-      FirebaseFirestore.instance.doc('Clients/$id');
+  DocumentReference get firebasefirestoreref => FirebaseFirestore.instance
+      .collection("users")
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .collection('clients')
+      .doc("$id");
 
   String? id;
   String? name;
+  String? email;
   String? cpf;
   String? rg;
   String? number;
@@ -45,7 +54,6 @@ class Client extends ChangeNotifier {
   String? city;
   String? ibge;
   String? state;
-  List<dynamic>? newImages;
   bool? deleted;
   bool _loading = false;
   bool get loading => _loading;
@@ -54,10 +62,41 @@ class Client extends ChangeNotifier {
     notifyListeners();
   }
 
+  cepapi(String cep, List<TextEditingController> controllers) async {
+    String path = 'https://viacep.com.br/ws/${cep}/json/';
+    Uri url = Uri.parse(path);
+    Map<String, dynamic>? inf;
+    http.Response response;
+    try {
+      response = await http.get(url);
+      print(response.body);
+      inf = jsonDecode(response.body);
+    } catch (e) {
+      print(e);
+    }
+    if (inf == null) {
+      return;
+    }
+    if (inf["erro"] == null) {
+      controllers[1].text = inf["logradouro"];
+      controllers[2].text = inf["bairro"];
+      controllers[3].text = inf["localidade"];
+      controllers[4].text = inf["ibge"];
+      controllers[5].text = inf["uf"];
+    } else {
+      controllers[1].text = "CEP não existe";
+      controllers[2].text = "";
+      controllers[3].text = "";
+      controllers[4].text = "";
+      controllers[5].text = "";
+    }
+  }
+
   Future<void> save() async {
     loading = true;
     Map<String, dynamic> data = {
       'name': name,
+      'email': email,
       'deleted': deleted,
       'cpf': cpf,
       'rg': rg,
@@ -70,8 +109,11 @@ class Client extends ChangeNotifier {
       'state': state
     };
     if (id == null) {
-      final doc =
-          await FirebaseFirestore.instance.collection('Clients').add(data);
+      final doc = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('clients')
+          .add(data);
       id = doc.id;
     } else {
       await firebasefirestoreref.update(data);
@@ -81,7 +123,7 @@ class Client extends ChangeNotifier {
   }
 
   void delete() {
-    firebasefirestoreref.update({'deleted': true});
+    firebasefirestoreref.delete();
   }
 
   Client clone() {

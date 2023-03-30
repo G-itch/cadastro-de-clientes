@@ -67,15 +67,6 @@ class UserManager extends ChangeNotifier {
     loading = false;
   }
 
-  cepapi(String cep) async {
-    String path = 'https://viacep.com.br/ws/${cep}/json/';
-    Uri url = Uri.parse(path);
-    http.Response response;
-
-    response = await http.get(url);
-    Map<String, dynamic> inf = jsonDecode(response.body);
-  }
-
   Future<void> loadCurrentUser({User? firebaseUser}) async {
     auth.authStateChanges().listen((User? currentuser) async {
       if (currentuser != null) {
