@@ -21,7 +21,7 @@ class ClientInformation extends StatefulWidget {
 
 class _ClientInformationState extends State<ClientInformation> {
   int selectedarea = 0;
-
+  CarouselController carouselController = CarouselController();
   @override
   Widget build(BuildContext context) {
     return Consumer<ClientManager>(builder: (_, clientManager, __) {
@@ -36,9 +36,9 @@ class _ClientInformationState extends State<ClientInformation> {
                 onTap: () {
                   setState(() {
                     selectedarea = 0;
-                    // carouselController.animateToPage(0,
-                    //     curve: Curves.easeInOut,
-                    //     duration: Duration(seconds: 1));
+                    carouselController.animateToPage(0,
+                        curve: Curves.easeInOut,
+                        duration: Duration(seconds: 1));
                   });
                 },
                 child: Column(
@@ -68,9 +68,9 @@ class _ClientInformationState extends State<ClientInformation> {
                 onTap: () {
                   setState(() {
                     selectedarea = 1;
-                    // carouselController.animateToPage(1,
-                    //     curve: Curves.easeInOut,
-                    //     duration: Duration(seconds: 1));
+                    carouselController.animateToPage(1,
+                        curve: Curves.easeInOut,
+                        duration: Duration(seconds: 1));
                   });
                 },
                 child: Column(
@@ -104,6 +104,7 @@ class _ClientInformationState extends State<ClientInformation> {
           Container(
             width: 400,
             child: CarouselSlider(
+              carouselController: carouselController,
               items: [
                 IdentityArea(client: client),
                 AddressArea(client: client)
@@ -118,197 +119,6 @@ class _ClientInformationState extends State<ClientInformation> {
               ),
             ),
           )
-          // Center(
-          //   child: FaIcon(
-          //     FontAwesomeIcons.idCardClip,
-          //     color: Colors.white,
-          //     size: 34,
-          //   ),
-          // ),
-          // SizedBox(
-          //   height: 8,
-          // ),
-          // GestureDetector(
-          //   onTap: () {
-          //     Clipboard.setData(ClipboardData(text: client.cpf)).then((value) {
-          //       //only if ->
-          //       ScaffoldMessenger.of(context)
-          //           .showSnackBar(snack("Nome copiado"));
-          //     });
-          //     ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          //   },
-          //   child: Container(
-          //     width: 200,
-          //     height: 46,
-          //     decoration: BoxDecoration(
-          //         borderRadius: BorderRadius.circular(8),
-          //         border: Border.all(
-          //           width: 2,
-          //           color: Color.fromARGB(255, 39, 39, 39),
-          //         ),
-          //         color: Color.fromARGB(255, 23, 23, 23)),
-          //     child: Padding(
-          //       padding: const EdgeInsets.all(8.0),
-          //       child: Center(
-          //         child: SingleChildScrollView(
-          //           scrollDirection: Axis.horizontal,
-          //           child: Text(
-          //             client.name!,
-          //             style: GoogleFonts.montserrat(
-          //                 color: Colors.white, fontWeight: FontWeight.w600),
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          // SizedBox(
-          //   height: 8,
-          // ),
-          // GestureDetector(
-          //   onTap: () {
-          //     Clipboard.setData(ClipboardData(text: client.cpf)).then((value) {
-          //       //only if ->
-          //       ScaffoldMessenger.of(context)
-          //           .showSnackBar(snack("Email copiado"));
-          //     });
-          //     ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          //   },
-          //   child: Container(
-          //     width: 200,
-          //     height: 46,
-          //     decoration: BoxDecoration(
-          //         borderRadius: BorderRadius.circular(8),
-          //         border: Border.all(
-          //           width: 2,
-          //           color: Color.fromARGB(255, 39, 39, 39),
-          //         ),
-          //         color: Color.fromARGB(255, 23, 23, 23)),
-          //     child: Padding(
-          //       padding: const EdgeInsets.all(8.0),
-          //       child: Center(
-          //         child: SingleChildScrollView(
-          //           scrollDirection: Axis.horizontal,
-          //           child: Text(
-          //             client.email!,
-          //             style: GoogleFonts.montserrat(
-          //                 color: Colors.white, fontWeight: FontWeight.w600),
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          // SizedBox(
-          //   height: 8,
-          // ),
-          // GestureDetector(
-          //   onTap: () {
-          //     Clipboard.setData(ClipboardData(text: client.cpf)).then((value) {
-          //       //only if ->
-          //       ScaffoldMessenger.of(context)
-          //           .showSnackBar(snack("Telefone copiado"));
-          //     });
-          //     ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          //   },
-          //   child: Container(
-          //     width: 200,
-          //     height: 46,
-          //     decoration: BoxDecoration(
-          //         borderRadius: BorderRadius.circular(8),
-          //         border: Border.all(
-          //           width: 2,
-          //           color: Color.fromARGB(255, 39, 39, 39),
-          //         ),
-          //         color: Color.fromARGB(255, 23, 23, 23)),
-          //     child: Padding(
-          //       padding: const EdgeInsets.all(8.0),
-          //       child: Center(
-          //         child: SingleChildScrollView(
-          //           scrollDirection: Axis.horizontal,
-          //           child: Text(
-          //             client.number!,
-          //             style: GoogleFonts.montserrat(
-          //                 color: Colors.white, fontWeight: FontWeight.w600),
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          // SizedBox(
-          //   height: 8,
-          // ),
-          // GestureDetector(
-          //   onTap: () {
-          //     Clipboard.setData(ClipboardData(text: client.cpf)).then((value) {
-          //       //only if ->
-          //       ScaffoldMessenger.of(context).showSnackBar(snack("RG copiado"));
-          //     });
-          //     ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          //   },
-          //   child: Container(
-          //     width: 200,
-          //     height: 46,
-          //     decoration: BoxDecoration(
-          //         borderRadius: BorderRadius.circular(8),
-          //         border: Border.all(
-          //           width: 2,
-          //           color: Color.fromARGB(255, 39, 39, 39),
-          //         ),
-          //         color: Color.fromARGB(255, 23, 23, 23)),
-          //     child: Padding(
-          //       padding: const EdgeInsets.all(8.0),
-          //       child: Center(
-          //         child: SingleChildScrollView(
-          //           scrollDirection: Axis.horizontal,
-          //           child: Text(
-          //             client.rg!,
-          //             style: GoogleFonts.montserrat(
-          //                 color: Colors.white, fontWeight: FontWeight.w600),
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          // SizedBox(
-          //   height: 8,
-          // ),
-          // GestureDetector(
-          //   onTap: () {
-          //     Clipboard.setData(ClipboardData(text: client.cpf)).then((value) {
-          //       //only if ->
-          //       ScaffoldMessenger.of(context)
-          //           .showSnackBar(snack("CPF copiado"));
-          //     });
-          //     ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          //   },
-          //   child: Container(
-          //     width: 200,
-          //     height: 46,
-          //     decoration: BoxDecoration(
-          //         borderRadius: BorderRadius.circular(8),
-          //         border: Border.all(
-          //           width: 2,
-          //           color: Color.fromARGB(255, 39, 39, 39),
-          //         ),
-          //         color: Color.fromARGB(255, 23, 23, 23)),
-          //     child: Padding(
-          //       padding: const EdgeInsets.all(8.0),
-          //       child: Center(
-          //         child: SingleChildScrollView(
-          //           scrollDirection: Axis.horizontal,
-          //           child: Text(
-          //             client.cpf!,
-          //             style: GoogleFonts.montserrat(
-          //                 color: Colors.white, fontWeight: FontWeight.w600),
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
         ],
       ).animate().fadeIn(
           duration: const Duration(seconds: 2),

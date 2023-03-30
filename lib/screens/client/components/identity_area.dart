@@ -24,7 +24,7 @@ class IdentityArea extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            Clipboard.setData(ClipboardData(text: client.cpf)).then((value) {
+            Clipboard.setData(ClipboardData(text: client.name)).then((value) {
               //only if ->
               ScaffoldMessenger.of(context).showSnackBar(snack("Nome copiado"));
             });
@@ -60,7 +60,7 @@ class IdentityArea extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            Clipboard.setData(ClipboardData(text: client.cpf)).then((value) {
+            Clipboard.setData(ClipboardData(text: client.email)).then((value) {
               //only if ->
               ScaffoldMessenger.of(context)
                   .showSnackBar(snack("Email copiado"));
@@ -97,7 +97,7 @@ class IdentityArea extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            Clipboard.setData(ClipboardData(text: client.cpf)).then((value) {
+            Clipboard.setData(ClipboardData(text: client.number)).then((value) {
               //only if ->
               ScaffoldMessenger.of(context)
                   .showSnackBar(snack("Telefone copiado"));
@@ -134,7 +134,7 @@ class IdentityArea extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            Clipboard.setData(ClipboardData(text: client.cpf)).then((value) {
+            Clipboard.setData(ClipboardData(text: client.rg)).then((value) {
               //only if ->
               ScaffoldMessenger.of(context).showSnackBar(snack("RG copiado"));
             });

@@ -14,7 +14,7 @@ class AddressArea extends StatelessWidget {
       children: [
         Center(
           child: FaIcon(
-            FontAwesomeIcons.idCardClip,
+            FontAwesomeIcons.locationDot,
             color: Colors.white,
             size: 34,
           ),
@@ -24,9 +24,9 @@ class AddressArea extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            Clipboard.setData(ClipboardData(text: client.cpf)).then((value) {
+            Clipboard.setData(ClipboardData(text: client.cep)).then((value) {
               //only if ->
-              ScaffoldMessenger.of(context).showSnackBar(snack("Nome copiado"));
+              ScaffoldMessenger.of(context).showSnackBar(snack("CEP copiado"));
             });
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
           },
@@ -46,7 +46,7 @@ class AddressArea extends StatelessWidget {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Text(
-                    client.name!,
+                    client.cep!,
                     style: GoogleFonts.montserrat(
                         color: Colors.white, fontWeight: FontWeight.w600),
                   ),
@@ -60,10 +60,46 @@ class AddressArea extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            Clipboard.setData(ClipboardData(text: client.cpf)).then((value) {
+            Clipboard.setData(ClipboardData(text: client.street)).then((value) {
+              //only if ->
+              ScaffoldMessenger.of(context).showSnackBar(snack("Rua copiada"));
+            });
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          },
+          child: Container(
+            width: 200,
+            height: 46,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  width: 2,
+                  color: Color.fromARGB(255, 39, 39, 39),
+                ),
+                color: Color.fromARGB(255, 23, 23, 23)),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Text(
+                    client.street!,
+                    style: GoogleFonts.montserrat(
+                        color: Colors.white, fontWeight: FontWeight.w600),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        GestureDetector(
+          onTap: () {
+            Clipboard.setData(ClipboardData(text: client.neigh)).then((value) {
               //only if ->
               ScaffoldMessenger.of(context)
-                  .showSnackBar(snack("Email copiado"));
+                  .showSnackBar(snack("Bairro copiado"));
             });
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
           },
@@ -83,7 +119,7 @@ class AddressArea extends StatelessWidget {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Text(
-                    client.email!,
+                    client.neigh!,
                     style: GoogleFonts.montserrat(
                         color: Colors.white, fontWeight: FontWeight.w600),
                   ),
@@ -97,10 +133,10 @@ class AddressArea extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            Clipboard.setData(ClipboardData(text: client.cpf)).then((value) {
+            Clipboard.setData(ClipboardData(text: client.city)).then((value) {
               //only if ->
               ScaffoldMessenger.of(context)
-                  .showSnackBar(snack("Telefone copiado"));
+                  .showSnackBar(snack("Cidade copiada"));
             });
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
           },
@@ -120,7 +156,7 @@ class AddressArea extends StatelessWidget {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Text(
-                    client.number!,
+                    client.city!,
                     style: GoogleFonts.montserrat(
                         color: Colors.white, fontWeight: FontWeight.w600),
                   ),
@@ -134,9 +170,9 @@ class AddressArea extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            Clipboard.setData(ClipboardData(text: client.cpf)).then((value) {
+            Clipboard.setData(ClipboardData(text: client.ibge)).then((value) {
               //only if ->
-              ScaffoldMessenger.of(context).showSnackBar(snack("RG copiado"));
+              ScaffoldMessenger.of(context).showSnackBar(snack("IBGE copiado"));
             });
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
           },
@@ -156,7 +192,7 @@ class AddressArea extends StatelessWidget {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Text(
-                    client.rg!,
+                    client.ibge!,
                     style: GoogleFonts.montserrat(
                         color: Colors.white, fontWeight: FontWeight.w600),
                   ),
@@ -170,9 +206,10 @@ class AddressArea extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            Clipboard.setData(ClipboardData(text: client.cpf)).then((value) {
+            Clipboard.setData(ClipboardData(text: client.state)).then((value) {
               //only if ->
-              ScaffoldMessenger.of(context).showSnackBar(snack("CPF copiado"));
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(snack("Estado copiado"));
             });
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
           },
@@ -192,7 +229,7 @@ class AddressArea extends StatelessWidget {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Text(
-                    client.cpf!,
+                    client.state!,
                     style: GoogleFonts.montserrat(
                         color: Colors.white, fontWeight: FontWeight.w600),
                   ),

@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../models/client_manager.dart';
+import 'components/dialog/search.dart';
 
 class ClientsPage extends StatefulWidget {
   const ClientsPage({super.key});
@@ -31,19 +32,72 @@ class _ClientsPageState extends State<ClientsPage> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 16, 16, 16),
       appBar: AppBar(
-        toolbarHeight: 80,
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        shadowColor: Colors.transparent,
-        title: Text(
-          "Clientes",
-          style: GoogleFonts.poppins(
-            color: Colors.white,
-            fontSize: 30,
-            fontWeight: FontWeight.w600,
+          toolbarHeight: 80,
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          actions: <Widget>[
+            Consumer<ClientManager>(builder: (_, clientManager, __) {
+              if (clientManager.search.isEmpty) {
+                return IconButton(
+                    onPressed: () async {
+                      final search = await showDialog<String>(
+                          context: context,
+                          builder: (_) => SearchDialog(
+                                initialtext: clientManager.search,
+                              ));
+                      if (search != null) {
+                        clientManager.search = search;
+                      }
+                    },
+                    icon: Icon(Icons.search));
+              } else {
+                return IconButton(
+                    onPressed: () async {
+                      clientManager.search = '';
+                    },
+                    icon: Icon(Icons.close));
+              }
+            }),
+          ],
+          title: Consumer<ClientManager>(
+            builder: (_, clientManager, __) {
+              if (clientManager.search.isEmpty) {
+                return Text("Clientes",
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w600,
+                    ));
+              } else {
+                return LayoutBuilder(builder: (_, constrains) {
+                  return GestureDetector(
+                    child: Container(
+                        width: constrains.biggest.width,
+                        child: Text(clientManager.search,
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontWeight: FontWeight.w600,
+                            ))),
+                    onTap: () async {
+                      final search = await showDialog<String>(
+                          context: context,
+                          builder: (_) => SearchDialog(
+                                initialtext: clientManager.search,
+                              ));
+                      if (search != null) {
+                        clientManager.search = search;
+                      }
+                    },
+                  );
+                });
+              }
+            },
+          )
+          //
           ),
-        ),
-      ),
       body: Container(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
@@ -61,6 +115,7 @@ class _ClientsPageState extends State<ClientsPage> {
                   child: Column(
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           ElevatedButton(
                             style: ButtonStyle(
@@ -68,7 +123,8 @@ class _ClientsPageState extends State<ClientsPage> {
                                     Color.fromARGB(255, 23, 23, 23))),
                             onPressed: () {
                               setState(() {
-                                // index = -1;
+                                index = -1;
+                                edit = false;
                                 edit = true;
                               });
                             },
@@ -87,13 +143,16 @@ class _ClientsPageState extends State<ClientsPage> {
                               ),
                             ),
                           ),
+                          SizedBox(
+                            width: 20,
+                          ),
                           ElevatedButton(
                             style: ButtonStyle(
                                 backgroundColor: MaterialStatePropertyAll(
                                     Color.fromARGB(255, 23, 23, 23))),
                             onPressed: () {
                               setState(() {
-                                edit = false;
+                                edit = true;
                               });
                             },
                             child: Padding(
@@ -102,7 +161,7 @@ class _ClientsPageState extends State<ClientsPage> {
                                 child: SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: Text(
-                                    "Adicionar Cliente",
+                                    "Editar informações",
                                     style: GoogleFonts.montserrat(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w600),
@@ -126,7 +185,8 @@ class _ClientsPageState extends State<ClientsPage> {
                                 shrinkWrap: true,
                                 itemBuilder: (_, index) {
                                   return ClientTile(
-                                    client: clientManager.allClients[index],
+                                    client:
+                                        clientManager.filteredClients[index],
                                     clientid: clientid,
                                     index: index,
                                   );
@@ -136,7 +196,8 @@ class _ClientsPageState extends State<ClientsPage> {
                                     height: 16,
                                   );
                                 },
-                                itemCount: clientManager.allClients.length);
+                                itemCount:
+                                    clientManager.filteredClients.length);
                           }),
                         ),
                       ),
@@ -151,8 +212,8 @@ class _ClientsPageState extends State<ClientsPage> {
                     child: SingleChildScrollView(
                   child: index != null
                       ? edit
-                          ? EditCLient(index: index ?? 0)
-                          : ClientInformation(index: index ?? 0)
+                          ? EditCLient(index: index!)
+                          : ClientInformation(index: index!)
                       // ClientInformation(
                       //     index: index ?? 0,
                       //   )

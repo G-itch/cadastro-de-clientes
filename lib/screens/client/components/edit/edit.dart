@@ -42,37 +42,37 @@ class _EditCLientState extends State<EditCLient> {
       } else {
         client = clientManager.allClients[widget.index];
       }
-      if (namecontroller.text.isEmpty) {
+      if (namecontroller.text.isEmpty || widget.index.isNegative) {
         namecontroller.text = client.name ?? "";
       }
-      if (emailcontroller.text.isEmpty) {
+      if (emailcontroller.text.isEmpty || widget.index.isNegative) {
         emailcontroller.text = client.email ?? "";
       }
-      if (numbercontroller.text.isEmpty) {
+      if (numbercontroller.text.isEmpty || widget.index.isNegative) {
         numbercontroller.text = client.number ?? "";
       }
-      if (rgcontroller.text.isEmpty) {
+      if (rgcontroller.text.isEmpty || widget.index.isNegative) {
         rgcontroller.text = client.rg ?? "";
       }
-      if (cpfcontroller.text.isEmpty) {
+      if (cpfcontroller.text.isEmpty || widget.index.isNegative) {
         cpfcontroller.text = client.cpf ?? "";
       }
-      if (cepcontroller.text.isEmpty) {
+      if (cepcontroller.text.isEmpty || widget.index.isNegative) {
         cepcontroller.text = client.cep ?? "";
       }
-      if (streetcontroller.text.isEmpty) {
+      if (streetcontroller.text.isEmpty || widget.index.isNegative) {
         streetcontroller.text = client.street ?? "";
       }
-      if (neighcontroller.text.isEmpty) {
+      if (neighcontroller.text.isEmpty || widget.index.isNegative) {
         neighcontroller.text = client.neigh ?? "";
       }
-      if (citycontroller.text.isEmpty) {
+      if (citycontroller.text.isEmpty || widget.index.isNegative) {
         citycontroller.text = client.city ?? "";
       }
-      if (ibgecontroller.text.isEmpty) {
+      if (ibgecontroller.text.isEmpty || widget.index.isNegative) {
         ibgecontroller.text = client.ibge ?? "";
       }
-      if (statecontroller.text.isEmpty) {
+      if (statecontroller.text.isEmpty || widget.index.isNegative) {
         statecontroller.text = client.state ?? "";
       }
       return ChangeNotifierProvider.value(
@@ -215,7 +215,9 @@ class _EditCLientState extends State<EditCLient> {
                           color: Colors.white,
                           strokeWidth: 2,
                         )
-                      : const Text("Salvar"),
+                      : widget.index.isNegative
+                          ? Text("Adicionar")
+                          : Text("Salvar"),
                 );
               }),
 
@@ -435,7 +437,7 @@ class _EditCLientState extends State<EditCLient> {
             ],
           ).animate().fadeIn(
               duration: const Duration(seconds: 2),
-              delay: const Duration(seconds: 1, milliseconds: 400)),
+              delay: const Duration(milliseconds: 600)),
         ),
       );
     });

@@ -1,5 +1,6 @@
 import 'package:cadastro/models/client.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ClientTile extends StatelessWidget {
   const ClientTile(
@@ -24,7 +25,39 @@ class ClientTile extends StatelessWidget {
               color: Color.fromARGB(255, 39, 39, 39),
             ),
             color: Color.fromARGB(255, 23, 23, 23)),
-        child: Text("oi"),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: 250,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Text(
+                    client.name!,
+                    style: GoogleFonts.montserrat(
+                        color: Colors.white, fontWeight: FontWeight.w600),
+                    maxLines: 1,
+                  ),
+                ),
+              ),
+              Container(
+                width: 150,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(client.email!,
+                        textAlign: TextAlign.end,
+                        style: GoogleFonts.montserrat(
+                            color: Colors.white, fontWeight: FontWeight.w600)),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

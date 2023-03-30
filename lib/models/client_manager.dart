@@ -52,8 +52,10 @@ class ClientManager extends ChangeNotifier {
         .get();
 
     allClients = snapClients.docs.map((d) => Client.fromdoc(d)).toList();
-    allClients
-        .sort((a, b) => a.toString().toLowerCase().compareTo(b.toString()));
+    allClients.sort((a, b) => a.name
+        .toString()
+        .toLowerCase()
+        .compareTo(b.name.toString().toLowerCase()));
     notifyListeners();
   }
 
