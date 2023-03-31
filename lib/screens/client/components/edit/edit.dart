@@ -246,7 +246,7 @@ class _EditCLientState extends State<EditCLient> {
                     ElevatedButton(
                       onPressed: () {
                         clientManager.delete(client);
-                        widget.index = 0;
+                        widget.index = -1;
                       },
                       style: const ButtonStyle(
                           backgroundColor: MaterialStatePropertyAll(
