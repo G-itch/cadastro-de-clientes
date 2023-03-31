@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:cadastro/models/user_manager.dart';
 import 'package:cadastro/screens/client/components/client_information.dart';
 import 'package:cadastro/screens/client/components/client_tile.dart';
@@ -15,14 +17,27 @@ import '../../models/client_manager.dart';
 import 'components/dialog/search.dart';
 
 class ClientsPage extends StatefulWidget {
-  const ClientsPage({super.key});
-
+  ClientsPage({super.key});
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController emailcontroller = TextEditingController();
+  TextEditingController numbercontroller = TextEditingController();
+  TextEditingController rgcontroller = TextEditingController();
+  TextEditingController cpfcontroller = TextEditingController();
+  TextEditingController cepcontroller = TextEditingController();
+  TextEditingController streetcontroller = TextEditingController();
+  TextEditingController neighcontroller = TextEditingController();
+  TextEditingController citycontroller = TextEditingController();
+  TextEditingController ibgecontroller = TextEditingController();
+  TextEditingController statecontroller = TextEditingController();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   @override
   State<ClientsPage> createState() => _ClientsPageState();
 }
 
 class _ClientsPageState extends State<ClientsPage> {
   int? index;
+  bool reset = true;
   bool edit = false;
   clientid(int newindex) {
     setState(() {
@@ -34,6 +49,7 @@ class _ClientsPageState extends State<ClientsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: widget.scaffoldKey,
         backgroundColor: Color.fromARGB(255, 16, 16, 16),
         appBar: AppBar(
             toolbarHeight: 80,
@@ -199,9 +215,25 @@ class _ClientsPageState extends State<ClientsPage> {
                                   onPressed: () {
                                     setState(() {
                                       index = -1;
+                                      reset = true;
+                                      widget.namecontroller.text = "";
+                                      widget.emailcontroller.text = "";
+                                      widget.numbercontroller.text = "";
+                                      widget.rgcontroller.text = "";
+                                      widget.cpfcontroller.text = "";
+                                      widget.cepcontroller.text = "";
+                                      widget.streetcontroller.text = "";
+                                      widget.neighcontroller.text = "";
+                                      widget.citycontroller.text = "";
+                                      widget.ibgecontroller.text = "";
+                                      widget.statecontroller.text = "";
                                       edit = false;
                                       edit = true;
                                     });
+                                    // await Future.delayed(Duration(seconds: 2));
+                                    // setState(() {
+                                    //   reset = false;
+                                    // });
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -227,6 +259,7 @@ class _ClientsPageState extends State<ClientsPage> {
                                           Color.fromARGB(255, 23, 23, 23))),
                                   onPressed: () {
                                     setState(() {
+                                      reset = false;
                                       edit = true;
                                     });
                                   },
@@ -289,7 +322,21 @@ class _ClientsPageState extends State<ClientsPage> {
                           child: SingleChildScrollView(
                         child: index != null
                             ? edit
-                                ? EditCLient(index: index!)
+                                ? EditCLient(
+                                    namecontroller: widget.namecontroller,
+                                    emailcontroller: widget.emailcontroller,
+                                    numbercontroller: widget.numbercontroller,
+                                    rgcontroller: widget.rgcontroller,
+                                    cpfcontroller: widget.cpfcontroller,
+                                    cepcontroller: widget.cepcontroller,
+                                    statecontroller: widget.statecontroller,
+                                    neighcontroller: widget.neighcontroller,
+                                    citycontroller: widget.citycontroller,
+                                    ibgecontroller: widget.ibgecontroller,
+                                    streetcontroller: widget.streetcontroller,
+                                    index: index!,
+                                    formkey: widget.formkey,
+                                  )
                                 : ClientInformation(index: index!)
                             // ClientInformation(
                             //     index: index ?? 0,

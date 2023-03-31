@@ -77,7 +77,7 @@ class ClientManager extends ChangeNotifier {
 
   void delete(Client client) {
     client.delete();
-    allClients.where((p) => p.id == client.id);
+    allClients.removeWhere((p) => p.id == client.id);
     notifyListeners();
   }
 }

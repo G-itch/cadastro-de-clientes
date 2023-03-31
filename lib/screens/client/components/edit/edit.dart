@@ -11,9 +11,36 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class EditCLient extends StatefulWidget {
-  const EditCLient({super.key, required this.index});
-  final int index;
+  EditCLient(
+      {super.key,
+      required this.index,
+      required this.namecontroller,
+      required this.emailcontroller,
+      required this.numbercontroller,
+      required this.rgcontroller,
+      required this.cpfcontroller,
+      required this.cepcontroller,
+      required this.streetcontroller,
+      required this.neighcontroller,
+      required this.citycontroller,
+      required this.ibgecontroller,
+      required this.statecontroller,
+      required this.formkey});
+  int index;
 
+  TextEditingController namecontroller;
+  TextEditingController emailcontroller;
+  TextEditingController numbercontroller;
+  TextEditingController rgcontroller;
+  TextEditingController cpfcontroller;
+  TextEditingController cepcontroller;
+  TextEditingController streetcontroller;
+  TextEditingController neighcontroller;
+  TextEditingController citycontroller;
+  TextEditingController ibgecontroller;
+  TextEditingController statecontroller;
+  CarouselController carouselController = CarouselController();
+  final GlobalKey<FormState> formkey;
   @override
   State<EditCLient> createState() => _EditCLientState();
 }
@@ -21,19 +48,7 @@ class EditCLient extends StatefulWidget {
 class _EditCLientState extends State<EditCLient> {
   late Client client;
   int selectedarea = 0;
-  TextEditingController namecontroller = TextEditingController();
-  TextEditingController emailcontroller = TextEditingController();
-  TextEditingController numbercontroller = TextEditingController();
-  TextEditingController rgcontroller = TextEditingController();
-  TextEditingController cpfcontroller = TextEditingController();
-  TextEditingController cepcontroller = TextEditingController();
-  TextEditingController streetcontroller = TextEditingController();
-  TextEditingController neighcontroller = TextEditingController();
-  TextEditingController citycontroller = TextEditingController();
-  TextEditingController ibgecontroller = TextEditingController();
-  TextEditingController statecontroller = TextEditingController();
-  CarouselController carouselController = CarouselController();
-  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ClientManager>(builder: (_, clientManager, __) {
@@ -42,43 +57,43 @@ class _EditCLientState extends State<EditCLient> {
       } else {
         client = clientManager.allClients[widget.index];
       }
-      if (namecontroller.text.isEmpty && widget.index.isNegative) {
-        namecontroller.text = client.name ?? "";
+      if (widget.namecontroller.text.isEmpty) {
+        widget.namecontroller.text = client.name ?? "";
       }
-      if (emailcontroller.text.isEmpty && widget.index.isNegative) {
-        emailcontroller.text = client.email ?? "";
+      if (widget.emailcontroller.text.isEmpty) {
+        widget.emailcontroller.text = client.email ?? "";
       }
-      if (numbercontroller.text.isEmpty && widget.index.isNegative) {
-        numbercontroller.text = client.number ?? "";
+      if (widget.numbercontroller.text.isEmpty) {
+        widget.numbercontroller.text = client.number ?? "";
       }
-      if (rgcontroller.text.isEmpty && widget.index.isNegative) {
-        rgcontroller.text = client.rg ?? "";
+      if (widget.rgcontroller.text.isEmpty) {
+        widget.rgcontroller.text = client.rg ?? "";
       }
-      if (cpfcontroller.text.isEmpty && widget.index.isNegative) {
-        cpfcontroller.text = client.cpf ?? "";
+      if (widget.cpfcontroller.text.isEmpty) {
+        widget.cpfcontroller.text = client.cpf ?? "";
       }
-      if (cepcontroller.text.isEmpty && widget.index.isNegative) {
-        cepcontroller.text = client.cep ?? "";
+      if (widget.cepcontroller.text.isEmpty) {
+        widget.cepcontroller.text = client.cep ?? "";
       }
-      if (streetcontroller.text.isEmpty && widget.index.isNegative) {
-        streetcontroller.text = client.street ?? "";
+      if (widget.streetcontroller.text.isEmpty) {
+        widget.streetcontroller.text = client.street ?? "";
       }
-      if (neighcontroller.text.isEmpty && widget.index.isNegative) {
-        neighcontroller.text = client.neigh ?? "";
+      if (widget.neighcontroller.text.isEmpty) {
+        widget.neighcontroller.text = client.neigh ?? "";
       }
-      if (citycontroller.text.isEmpty && widget.index.isNegative) {
-        citycontroller.text = client.city ?? "";
+      if (widget.citycontroller.text.isEmpty) {
+        widget.citycontroller.text = client.city ?? "";
       }
-      if (ibgecontroller.text.isEmpty && widget.index.isNegative) {
-        ibgecontroller.text = client.ibge ?? "";
+      if (widget.ibgecontroller.text.isEmpty) {
+        widget.ibgecontroller.text = client.ibge ?? "";
       }
-      if (statecontroller.text.isEmpty && widget.index.isNegative) {
-        statecontroller.text = client.state ?? "";
+      if (widget.statecontroller.text.isEmpty) {
+        widget.statecontroller.text = client.state ?? "";
       }
       return ChangeNotifierProvider.value(
         value: client,
         child: Form(
-          key: formkey,
+          key: widget.formkey,
           child: Column(
             children: [
               Row(
@@ -89,7 +104,7 @@ class _EditCLientState extends State<EditCLient> {
                     onTap: () {
                       setState(() {
                         selectedarea = 0;
-                        carouselController.animateToPage(0,
+                        widget.carouselController.animateToPage(0,
                             curve: Curves.easeInOut,
                             duration: Duration(seconds: 1));
                       });
@@ -122,7 +137,7 @@ class _EditCLientState extends State<EditCLient> {
                     onTap: () {
                       setState(() {
                         selectedarea = 1;
-                        carouselController.animateToPage(1,
+                        widget.carouselController.animateToPage(1,
                             curve: Curves.easeInOut,
                             duration: Duration(seconds: 1));
                       });
@@ -159,27 +174,27 @@ class _EditCLientState extends State<EditCLient> {
               Container(
                 width: 400,
                 child: CarouselSlider(
-                  carouselController: carouselController,
+                  carouselController: widget.carouselController,
                   items: [
                     IdentityEdit(
                       client: client,
                       controllers: [
-                        namecontroller,
-                        emailcontroller,
-                        numbercontroller,
-                        rgcontroller,
-                        cpfcontroller
+                        widget.namecontroller,
+                        widget.emailcontroller,
+                        widget.numbercontroller,
+                        widget.rgcontroller,
+                        widget.cpfcontroller
                       ],
                     ),
                     AddressEdit(
                       client: client,
                       controllers: [
-                        cepcontroller,
-                        streetcontroller,
-                        neighcontroller,
-                        citycontroller,
-                        ibgecontroller,
-                        statecontroller
+                        widget.cepcontroller,
+                        widget.streetcontroller,
+                        widget.neighcontroller,
+                        widget.citycontroller,
+                        widget.ibgecontroller,
+                        widget.statecontroller
                       ],
                     )
                   ],
@@ -193,247 +208,59 @@ class _EditCLientState extends State<EditCLient> {
                   ),
                 ),
               ),
-              Consumer<Client>(builder: (_, client, __) {
-                return ElevatedButton(
-                  onPressed: !client.loading
-                      ? () async {
-                          if (formkey.currentState!.validate()) {
-                            formkey.currentState?.save();
-                            await client.save();
-                            if (context.mounted) {
-                              Provider.of<ClientManager>(context, listen: false)
-                                  .update(client);
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Consumer<Client>(builder: (_, client, __) {
+                    return ElevatedButton(
+                      onPressed: !client.loading
+                          ? () async {
+                              if (widget.formkey.currentState!.validate()) {
+                                widget.formkey.currentState?.save();
+                                await client.save();
+                                if (context.mounted) {
+                                  Provider.of<ClientManager>(context,
+                                          listen: false)
+                                      .update(client);
+                                }
+                              }
                             }
-                          }
-                        }
-                      : null,
-                  style: const ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(
-                          Color.fromARGB(255, 23, 23, 23))),
-                  child: client.loading
-                      ? const CircularProgressIndicator(
-                          color: Colors.white,
-                          strokeWidth: 2,
-                        )
-                      : widget.index.isNegative
-                          ? Text("Adicionar")
-                          : Text("Salvar"),
-                );
-              }),
-
-              // Center(
-              //   child: FaIcon(
-              //     FontAwesomeIcons.idCardClip,
-              //     color: Colors.white,
-              //     size: 34,
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: 8,
-              // ),
-              // ConstrainedBox(
-              //   constraints: BoxConstraints(maxWidth: 200),
-              //   child: Container(
-              //     child: TextFormField(
-              //       initialValue: client.name ?? "",
-              //       style: GoogleFonts.poppins(
-              //           fontSize: 14,
-              //           fontWeight: FontWeight.w600,
-              //           color: Colors.white),
-              //       cursorHeight: 20,
-              //       cursorColor: Colors.white,
-              //       decoration: InputDecoration(
-              //         isDense: true,
-              //         filled: true,
-              //         fillColor: Color.fromARGB(255, 23, 23, 23),
-              //         hintText: 'Nome',
-              //         enabledBorder: bordertext,
-              //         disabledBorder: bordertext,
-              //         border: bordertext,
-              //         focusedBorder: bordertext,
-              //         hintStyle: GoogleFonts.poppins(
-              //             fontSize: 14,
-              //             fontWeight: FontWeight.w600,
-              //             color: Color.fromARGB(255, 113, 113, 113)),
-              //       ),
-              //       autocorrect: false,
-              //       keyboardType: TextInputType.emailAddress,
-              //       validator: (name) {
-              //         if (name!.isEmpty) {
-              //           return 'Insira um nome';
-              //         }
-              //         return null;
-              //       },
-              //       onSaved: (name) {
-              //         client.name = name;
-              //       },
-              //     ),
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: 8,
-              // ),
-              // ConstrainedBox(
-              //     constraints: BoxConstraints(maxWidth: 200),
-              //     child: Container(
-              //       child: TextFormField(
-              //         initialValue: client.email ?? "",
-              //         style: GoogleFonts.poppins(
-              //             fontSize: 14,
-              //             fontWeight: FontWeight.w600,
-              //             color: Colors.white),
-              //         cursorHeight: 20,
-              //         cursorColor: Colors.white,
-              //         decoration: InputDecoration(
-              //           isDense: true,
-              //           filled: true,
-              //           fillColor: Color.fromARGB(255, 23, 23, 23),
-              //           hintText: 'Email',
-              //           enabledBorder: bordertext,
-              //           disabledBorder: bordertext,
-              //           border: bordertext,
-              //           focusedBorder: bordertext,
-              //           hintStyle: GoogleFonts.poppins(
-              //               fontSize: 14,
-              //               fontWeight: FontWeight.w600,
-              //               color: Color.fromARGB(255, 113, 113, 113)),
-              //         ),
-              //         autocorrect: false,
-              //         keyboardType: TextInputType.emailAddress,
-              //         validator: (email) {
-              //           if (email!.isEmpty && !emailValid(email)) {
-              //             return 'Insira um email válido';
-              //           }
-              //           return null;
-              //         },
-              //         onSaved: (email) {
-              //           client.email = email;
-              //         },
-              //       ),
-              //     )),
-              // SizedBox(
-              //   height: 8,
-              // ),
-              // ConstrainedBox(
-              //     constraints: BoxConstraints(maxWidth: 200),
-              //     child: Container(
-              //       child: TextFormField(
-              //         initialValue: client.number ?? "",
-              //         style: GoogleFonts.poppins(
-              //             fontSize: 14,
-              //             fontWeight: FontWeight.w600,
-              //             color: Colors.white),
-              //         cursorHeight: 20,
-              //         cursorColor: Colors.white,
-              //         decoration: InputDecoration(
-              //           isDense: true,
-              //           filled: true,
-              //           fillColor: Color.fromARGB(255, 23, 23, 23),
-              //           hintText: 'Telefone',
-              //           enabledBorder: bordertext,
-              //           disabledBorder: bordertext,
-              //           border: bordertext,
-              //           focusedBorder: bordertext,
-              //           hintStyle: GoogleFonts.poppins(
-              //               fontSize: 14,
-              //               fontWeight: FontWeight.w600,
-              //               color: Color.fromARGB(255, 113, 113, 113)),
-              //         ),
-              //         autocorrect: false,
-              //         keyboardType: TextInputType.emailAddress,
-              //         validator: (number) {
-              //           if (number!.isEmpty) {
-              //             return 'Insira um número de telefone';
-              //           }
-              //           return null;
-              //         },
-              //         onSaved: (number) {
-              //           client.number = number;
-              //         },
-              //       ),
-              //     )),
-              // SizedBox(
-              //   height: 8,
-              // ),
-              // ConstrainedBox(
-              //     constraints: BoxConstraints(maxWidth: 200),
-              //     child: Container(
-              //       child: TextFormField(
-              //         initialValue: client.rg ?? "",
-              //         style: GoogleFonts.poppins(
-              //             fontSize: 14,
-              //             fontWeight: FontWeight.w600,
-              //             color: Colors.white),
-              //         cursorHeight: 20,
-              //         cursorColor: Colors.white,
-              //         decoration: InputDecoration(
-              //           isDense: true,
-              //           filled: true,
-              //           fillColor: Color.fromARGB(255, 23, 23, 23),
-              //           hintText: 'RG',
-              //           enabledBorder: bordertext,
-              //           disabledBorder: bordertext,
-              //           border: bordertext,
-              //           focusedBorder: bordertext,
-              //           hintStyle: GoogleFonts.poppins(
-              //               fontSize: 14,
-              //               fontWeight: FontWeight.w600,
-              //               color: Color.fromARGB(255, 113, 113, 113)),
-              //         ),
-              //         autocorrect: false,
-              //         keyboardType: TextInputType.emailAddress,
-              //         validator: (rg) {
-              //           if (rg!.isEmpty) {
-              //             return 'Insira um rg';
-              //           }
-              //           return null;
-              //         },
-              //         onSaved: (rg) {
-              //           client.rg = rg;
-              //         },
-              //       ),
-              //     )),
-              // SizedBox(
-              //   height: 8,
-              // ),
-              // ConstrainedBox(
-              //     constraints: BoxConstraints(maxWidth: 200),
-              //     child: Container(
-              //       child: TextFormField(
-              //         initialValue: client.number ?? "",
-              //         style: GoogleFonts.poppins(
-              //             fontSize: 14,
-              //             fontWeight: FontWeight.w600,
-              //             color: Colors.white),
-              //         cursorHeight: 20,
-              //         cursorColor: Colors.white,
-              //         decoration: InputDecoration(
-              //           isDense: true,
-              //           filled: true,
-              //           fillColor: Color.fromARGB(255, 23, 23, 23),
-              //           hintText: 'CPF',
-              //           enabledBorder: bordertext,
-              //           disabledBorder: bordertext,
-              //           border: bordertext,
-              //           focusedBorder: bordertext,
-              //           hintStyle: GoogleFonts.poppins(
-              //               fontSize: 14,
-              //               fontWeight: FontWeight.w600,
-              //               color: Color.fromARGB(255, 113, 113, 113)),
-              //         ),
-              //         autocorrect: false,
-              //         keyboardType: TextInputType.emailAddress,
-              //         validator: (cpf) {
-              //           if (cpf!.isEmpty) {
-              //             return 'Insira um cpf válido';
-              //           }
-              //           return null;
-              //         },
-              //         onSaved: (cpf) {
-              //           client.cpf = cpf;
-              //         },
-              //       ),
-              //     )),
+                          : null,
+                      style: const ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll(
+                              Color.fromARGB(255, 23, 23, 23))),
+                      child: client.loading
+                          ? const CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            )
+                          : widget.index.isNegative
+                              ? Text("Adicionar")
+                              : Text("Salvar"),
+                    );
+                  }),
+                  if (!widget.index.isNegative) ...[
+                    SizedBox(
+                      width: 10,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        clientManager.delete(client);
+                        widget.index = 0;
+                      },
+                      style: const ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll(
+                              Color.fromARGB(255, 23, 23, 23))),
+                      child: client.loading
+                          ? const CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            )
+                          : Text("Excluir"),
+                    )
+                  ]
+                ],
+              ),
             ],
           ).animate().fadeIn(
               duration: const Duration(seconds: 2),
